@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Apuntes Completo: Patrones y Fundamentos de Java POO</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #16a085;
+            --accent: #e67e22;
+            --bg: #f8f9fa;
+            --text: #333;
+            --code-bg: #272822;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text);
+            background-color: var(--bg);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--primary);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        nav {
+            background: #34495e;
+            padding: 0.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        nav a:hover {
+            color: var(--secondary);
+        }
+        main {
+            max-width: 1050px;
+            margin: 2rem auto;
+            padding: 0 1.5rem;
+        }
+        section {
+            background: white;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h2 {
+            color: var(--primary);
+            border-bottom: 3px solid var(--secondary);
+            padding-bottom: 0.5rem;
+            margin-top: 0;
+        }
+        h3 {
+            color: #2980b9;
+            margin-top: 1.5rem;
+            border-left: 4px solid var(--accent);
+            padding-left: 0.5rem;
+        }
+        ul {
+            padding-left: 1.2rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+            color: var(--primary);
+        }
+        pre {
+            background-color: var(--code-bg);
+            color: #f8f8f2;
+            padding: 1rem;
+            border-radius: 5px;
+            overflow-x: auto;
+            font-family: 'Consolas', 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+        }
+        .important-box {
+            background-color: #e8f8f5;
+            border-left: 5px solid var(--secondary);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+        .warning-box {
+            background-color: #fdf2e9;
+            border-left: 5px solid var(--accent);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 5px 5px 0;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Manual de Desarrollo Java</h1>
+    <p>Fundamentos POO, Variables y Patrones de Diseño Avanzados</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="#poo-propiedades">Propiedades POO</a></li>
+        <li><a href="#clases-java">Clases en Java</a></li>
+        <li><a href="#variables-tipos">Variables y Memoria</a></li>
+        <li><a href="#composite">Composite</a></li>
+        <li><a href="#visitor">Visitor</a></li>
+        <li><a href="#factory">Factory Method</a></li>
+        <li><a href="#builder">Builder</a></li>
+    </ul>
+</nav>
+
+<main>
+
+    <section id="poo-propiedades">
+        <h2>1. Los 4 Pilares de la Orientación a Objetos</h2>
+        <p>Para diseñar software robusto y aplicar patrones de forma efectiva, es obligatorio dominar las cuatro propiedades fundamentales de la POO:</p>
+
+        <h3>Abstracción</h3>
+        <p>Consiste en aislar los elementos esenciales de un objeto ignorando los detalles irrelevantes de su implementación. En Java lo logramos mediante <strong>Interfaces</strong> y <strong>Clases Abstractas</strong>. Permite interactuar con un sistema sabiendo <em>qué hace</em> sin necesidad de saber <em>cómo lo hace</em>.</p>
+
+        <h3>Encapsulamiento</h3>
+        <p>Ocultamiento del estado interno de un objeto. Los atributos deben ser privados (<code>private</code>) y su acceso/modificación debe controlarse estrictamente mediante métodos públicos (getters/setters o métodos de negocio), garantizando que el objeto mantenga siempre un estado válido.</p>
+
+        <h3>Herencia</h3>
+        <p>Mecanismo que permite a una clase (subclase) reutilizar y extender los atributos y métodos de otra clase (superclase). En Java se aplica con la palabra clave <code>extends</code>.
+            <br><small class="warning-box" style="display:inline-block; margin:5px 0;"><strong>Regla de oro:</strong> Favorece la composición sobre la herencia si la relación no cumple estrictamente un vínculo "Es Un" (Is-A).</small></p>
+
+        <h3>Polimorfismo</h3>
+        <p>Es la capacidad de una variable de referencia de adoptar múltiples formas dependiendo del objeto real al que apunte en tiempo de ejecución. Permite tratar objetos de diferentes subclases de manera uniforme a través de la interfaz o clase padre común.</p>
+    </section>
+
+    <section id="clases-java">
+        <h2>2. Estructura de Clases y Ciclo de Vida en Java</h2>
+        <p>Una clase es la plantilla o molde. El objeto es la instancia real en memoria construida a partir de ese molde.</p>
+
+        <h3>Modificadores de Acceso (Visibilidad)</h3>
+        <table>
+            <tr>
+                <th>Modificador</th>
+                <th>Misma Clase</th>
+                <th>Mismo Paquete (Default)</th>
+                <th>Subclase (Herencia)</th>
+                <th>Universo (Cualquiera)</th>
+            </tr>
+            <tr>
+                <td><code>private</code></td>
+                <td>Sí</td>
+                <td>No</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td><i>default</i> (Ninguno)</td>
+                <td>Sí</td>
+                <td>Sí</td>
+                <td>No</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td><code>protected</code></td>
+                <td>Sí</td>
+                <td>Sí</td>
+                <td>Sí</td>
+                <td>No</td>
+            </tr>
+            <tr>
+                <td><code>public</code></td>
+                <td>Sí</td>
+                <td>Sí</td>
+                <td>Sí</td>
+                <td>Sí</td>
+            </tr>
+        </table>
+
+        <h3>Palabras Clave Clave: <code>static</code> y <code>final</code></h3>
+        <ul>
+            <li><strong><code>static</code> (Ámbito de Clase):</strong> Indica que el atributo o método pertenece a la clase en sí, no a las instancias. Existe una sola copia del atributo compartida por todos los objetos creados.</li>
+            <li><strong><code>final</code> (Inmutabilidad):</strong>
+                <ul>
+                    <li>En variables: Convierte el campo en constante (no puede cambiar su valor tras asignarse).</li>
+                    <li>En métodos: Evita que el método sea sobrescrito (<code>@Override</code>) por subclases.</li>
+                    <li>En clases: Impide que la clase sea heredada (ej: la clase <code>String</code> en Java es <code>final</code>).</li>
+                </ul>
+            </li>
+        </ul>
+    </section>
+
+    <section id="variables-tipos">
+        <h2>3. Tipos de Variables y Gestión de Memoria</h2>
+        <p>En Java las variables se clasifican estrictamente en dos categorías. Comprender cómo se comportan en la memoria (Stack vs. Heap) evita errores críticos de referencias nulas y mutaciones no deseadas.</p>
+
+        <h3>Variables Primitivas vs. Referencias (Objetos)</h3>
+        <table>
+            <tr>
+                <th>Característica</th>
+                <th>Variables Primitivas (<code>int</code>, <code>double</code>, <code>boolean</code>, etc.)</th>
+                <th>Variables de Referencia (Objetos, Arrays, Clases wrapper)</th>
+            </tr>
+            <tr>
+                <th>¿Qué almacenan?</th>
+                <td>El valor real directamente en la variable.</td>
+                <td>Una dirección de memoria (puntero seguro) donde reside el objeto.</td>
+            </tr>
+            <tr>
+                <th>Ubicación física</th>
+                <td>Viven completamente en la memoria <strong>Stack</strong>.</td>
+                <td>La variable (dirección) vive en el <strong>Stack</strong>, pero el objeto real vive en el <strong>Heap</strong>.</td>
+            </tr>
+            <tr>
+                <th>Paso por parámetro</th>
+                <td>Se pasan <strong>por valor</strong> (se copia el dato, el original no se altera).</td>
+                <td>Se pasa <strong>por valor la referencia</strong> (se copia la dirección. Si modificas las propiedades internas del objeto dentro del método, los cambios afectarán al objeto original).</td>
+            </tr>
+            <tr>
+                <th>Valor por defecto</th>
+                <td><code>0</code>, <code>0.0</code> o <code>false</code>.</td>
+                <td><code>null</code> (No apunta a ninguna dirección todavía).</td>
+            </tr>
+        </table>
+
+        <div class="warning-box">
+            <strong>¡Cuidado con String e Inmutabilidad!</strong> Aunque <code>String</code> es un objeto en Java (Referencia), está diseñado para ser <strong>inmutable</strong>. Cualquier operación de modificación (como <code>.toUpperCase()</code>) no altera el String original; genera un objeto nuevo totalmente distinto en el Heap.
+        </div>
+    </section>
+
+    <section id="composite">
+        <h2>4. Patrón Composite (Estructural)</h2>
+        <p><strong>Propósito:</strong> Permite componer objetos en estructuras de árbol para representar jerarquías de parte-todo. Hace que los clientes puedan tratar de manera uniforme a los objetos individuales y a las composiciones de objetos.</p>
+
+        <h3>Cómo desarrollarlo</h3>
+        <ol>
+            <li><strong>Componente (Clase base/Interfaz):</strong> Declara la interfaz común para los objetos de la composición (métodos de negocio) y, opcionalmente, para la gestión de hijos.</li>
+            <li><strong>Hoja (Leaf):</strong> Representa los objetos finales que no tienen hijos. Implementa las operaciones de negocio directas.</li>
+            <li><strong>Compuesto (Composite):</strong> Almacena componentes hijos (mediante una lista). Implementa las operaciones delegando el trabajo a sus hijos y agregando o modificando el resultado.</li>
+        </ol>
+
+        <h3>Qué tener en cuenta en el desarrollo</h3>
+        <ul>
+            <li><strong>Transparencia vs. Seguridad:</strong> Si defines los métodos de gestión de hijos (<code>add()</code>, <code>remove()</code>) en la clase base genérica, ganas <em>transparencia</em> (puedes tratar a las Hojas y Compuestos exactamente igual), pero pierdes <em>seguridad</em> (llamar a <code>add()</code> en una Hoja lanzará un error en tiempo de ejecución).</li>
+            <li><strong>Caché de resultados:</strong> Si el recorrido del árbol para calcular algo es costoso, considera implementar un sistema de caché en los nodos compuestos que se invalide cuando cambie la estructura.</li>
+        </ul>
+        <div class="important-box">
+            <strong>Ejemplo clásico:</strong> Estructuras de archivos (Archivos y Carpetas), elementos de una interfaz gráfica (Botón dentro de un Panel dentro de una Ventana).
+        </div>
+    </section>
+
+    <section id="visitor">
+        <h2>5. Patrón Visitor (Comportamiento)</h2>
+        <p><strong>Propósito:</strong> Permite separar un algoritmo o una operación de la estructura de objetos sobre la que opera. De esta forma, se pueden añadir nuevas operaciones a una jerarquía de clases existente sin modificar dichas clases.</p>
+
+        <h3>Cómo desarrollarlo</h3>
+        <ol>
+            <li><strong>Interfaz Visitor:</strong> Declara un método <code>visit(ElementoA)</code>, <code>visit(ElementoB)</code> por cada clase concreta de la jerarquía.</li>
+            <li><strong>Clase Visitante Concreta:</strong> Implementa cada método con la lógica específica del algoritmo para esa clase.</li>
+            <li><strong>Método Accept:</strong> Añadir el método <code>public void accept(Visitor v)</code> en la interfaz base de la jerarquía de objetos y obligar a cada clase concreta a implementarlo haciendo <code>v.visit(this);</code>.</li>
+        </ol>
+
+        <h3>Qué tener en cuenta en el desarrollo</h3>
+        <ul>
+            <li><strong>El precio de la estabilidad:</strong> Este patrón es excelente si la jerarquía de clases de objetos es <strong>estable</strong>. Si añades una nueva clase a la jerarquía en el futuro, tendrás que modificar la interfaz <code>Visitor</code> y romperás todos los visitantes existentes.</li>
+            <li><strong>Double Dispatch (Doble Despacho):</strong> Recuerda que el truco está en que <code>accept()</code> resuelve en tiempo de ejecución a qué clase pertenece el objeto, y la sobrecarga del método <code>visit()</code> mapea estáticamente el tipo en el visitante.</li>
+        </ul>
+    </section>
+
+    <section id="factory">
+        <h2>6. Factory Method (Creacional)</h2>
+        <p><strong>Propósito:</strong> Define una interfaz para crear un objeto, pero deja que las subclases decidan qué clase instanciar. Permite que una clase delegue la instanciación a subclases.</p>
+
+        <h3>Cómo desarrollarlo</h3>
+        <ol>
+            <li><strong>Producto:</strong> Interfaz común para todos los objetos que el método de fábrica creará.</li>
+            <li><strong>Productos Concretos:</strong> Implementaciones específicas del Producto.</li>
+            <li><strong>Creador (Abstracto o Interfaz):</strong> Declara el método de fábrica (ej: <code>factoryMethod()</code>) que devuelve un objeto Producto.</li>
+            <li><strong>Creadores Concretos:</strong> Sobrescriben el método de fábrica para devolver una instancia de un Producto Concreto específico.</li>
+        </ol>
+
+        <h3>Qué tener en cuenta en el desarrollo</h3>
+        <ul>
+            <li><strong>Acoplamiento laxo:</strong> El código cliente solo conoce la interfaz del Creador y del Producto. Esto te permite cambiar los productos concretos en el futuro sin romper el código que los usa.</li>
+            <li><strong>Proliferación de subclases:</strong> El principal peligro es que para cada nuevo producto concreto que necesites, te verás obligado a crear una nueva subclase del Creador.</li>
+        </ul>
+    </section>
+
+    <section id="builder">
+        <h2>7. Patrón Builder (Creacional)</h2>
+        <p><strong>Propósito:</strong> Permite construir objetos complejos paso a paso. El patrón permite producir diferentes tipos y representaciones de un objeto utilizando el mismo código de construcción.</p>
+
+        <h3>Cómo desarrollarlo</h3>
+        <ol>
+            <li><strong>Constructor (Builder Interface):</strong> Declara los pasos de construcción de los objetos comunes a todos los tipos de constructores.</li>
+            <li><strong>Constructores Concretos:</strong> Implementan los pasos de construcción y mantienen el resultado (objeto final) en su estado interno. Ofrecen un método (ej: <code>build()</code>) para extraer el objeto.</li>
+        </ol>
+
+        <h3>Qué tener en cuenta en el desarrollo</h3>
+        <ul>
+            <li><strong>Inmutabilidad:</strong> Es el patrón rey para crear objetos **inmutables**. Configuras todo en el constructor intermedio y, al llamar al método final (usualmente llamado <code>build()</code>), se genera el objeto definitivo con parámetros de "solo lectura" (sin setters).</li>
+            <li><strong>Retorno Encadenado (Fluent Interface):</strong> Asegúrate de que cada método del Builder devuelva el propio objeto Builder (<code>return this;</code>) para permitir el encadenamiento de métodos (ej: <code>builder.setName("A").SetAge(10).build()</code>).</li>
+        </ul>
+    </section>
+
+</main>
+
+</body>
+</html>
