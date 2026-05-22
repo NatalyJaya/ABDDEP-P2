@@ -5,7 +5,7 @@ public class SLIFactory {
             case BUY_3_PAY_2 :
                 return new Buy3Pay2SLI(desc, quantity);
             case NORMAL:
-                return new
+                return ...;
             case SECOND_HALF_PRICE:
                 return ...;
         }

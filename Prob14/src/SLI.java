@@ -2,7 +2,7 @@
 // SLI pasa a ser abstracta para que subTotal() pueda hacer cosas distintas acorde a la promo -> POLIMORFISMO
 public abstract class SLI { // SLI = SalesLineItem
 
-    // pasa a protected
+    //PROTECTED!: asi SLI puede verlas, y también todas sus clases hijas (subclases) como Buy3Pay2SLI o NormalSLI
     protected ProductDescription desc;
     protected int quantity;
 
